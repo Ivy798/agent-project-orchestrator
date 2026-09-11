@@ -143,13 +143,15 @@ The initial `main` run ([34558788837](https://github.com/Ivy798/agent-project-or
 
 The Windows failure was caused by one worktree being reported through two valid native aliases: the ledger contained `C:\Users\RUNNER~1\...`, while Git reported `C:/Users/runneradmin/...`. The fix uses native filesystem identity checks for existing paths and preserves lexical normalization as the fallback.
 
-The final pull-request run ([34559359119](https://github.com/Ivy798/agent-project-orchestrator/actions/runs/34559359119)) at commit `9e4b445b1196c1b0fca9963da68a34b875d10b36` passed:
+The path-fix validation run ([34559359119](https://github.com/Ivy798/agent-project-orchestrator/actions/runs/34559359119)) at commit `9e4b445b1196c1b0fca9963da68a34b875d10b36` passed:
 
 - Ubuntu Python 3.11: 41 tests passed; selftest passed;
 - Ubuntu Python 3.13: 41 tests passed; selftest passed;
 - Windows Python 3.11: 41 tests passed; selftest passed;
 - Windows Python 3.13: 41 tests passed; selftest passed;
 - wheel build and package-content hygiene: passed.
+
+The workflow-runtime follow-up run ([34560279115](https://github.com/Ivy798/agent-project-orchestrator/actions/runs/34560279115)) at commit `244891a757af949daded82488f5b6b396efd64f6` repeated all five successful jobs with `actions/setup-python@v6`; the earlier Node 20 deprecation annotations were absent.
 
 The pull request remains unmerged pending explicit owner approval. After merge, the resulting `main` commit must pass the same CI workflow before the `v1.2.0` tag is created.
 
