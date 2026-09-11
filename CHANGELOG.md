@@ -20,6 +20,7 @@
 - CLI mutation commands consistently execute through the primary stable controller checkout;
 - Windows GitHub CLI execution honors the PATH-resolved command and decodes CLI output as UTF-8;
 - native path identity checks handle Windows 8.3 short-path aliases returned by hosted runners;
+- GitHub Actions use the Node 24-compatible `actions/setup-python@v6` runtime;
 - `ready_for_merge` can enforce live remote PR/CI state when enabled.
 
 ### Intentionally deferred
