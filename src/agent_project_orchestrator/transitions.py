@@ -41,7 +41,10 @@ def _assert_worktree_current(repo, task):
     if not observed:
         raise ValidationError('task requires an active worktree for its branch')
     if ledger and not gitops.same_path(ledger, observed):
-        raise ValidationError('ledger worktree path does not match Git worktree path')
+        raise ValidationError(
+            'ledger worktree path does not match Git worktree path: '
+            f'ledger={ledger!r}, observed={observed!r}'
+        )
     if not gitops.worktree_clean(repo, observed):
         raise ValidationError('task worktree must be clean')
     if commit:
