@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "project": "Minimal APO Example",
+  "stable_branch": "main",
+  "current_phase": "phase-1",
+  "tasks": {
+    "TASK-001": {
+      "id": "TASK-001",
+      "title": "Create application skeleton",
+      "depends_on": [],
+      "touches": ["apps/web"],
+      "parallel_safe_with": [],
+      "required_checks": ["unit", "build"]
+    }
+  }
+}

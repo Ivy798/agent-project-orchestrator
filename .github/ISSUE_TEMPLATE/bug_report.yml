@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a reproducible workflow or safety-gate defect
+title: "[bug] "
+labels: [bug]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Reproduction steps
+      description: Include the minimal Git/APO commands needed to reproduce the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: OS
+      placeholder: Windows 11 / Ubuntu 24.04 / macOS
+    validations:
+      required: true
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+  - type: input
+    id: git
+    attributes:
+      label: Git version
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Logs / evidence
+      description: Remove secrets before posting.

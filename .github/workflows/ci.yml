@@ -1,0 +1,65 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: test (${{ matrix.os }}, py${{ matrix.python-version }})
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 12
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        python-version: ["3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install
+        run: python -m pip install -e ".[test]"
+      - name: Run tests
+        run: python -m pytest -q
+      - name: Run selftest
+        run: python apo.py selftest
+
+  package:
+    name: package hygiene
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install build tooling
+        run: python -m pip install -e ".[dev]"
+      - name: Build distributions
+        run: python -m build --wheel
+      - name: Check package contents
+        shell: bash
+        run: |
+          python - <<'PY'
+          import pathlib, zipfile
+          bad = ("/build/", ".egg-info/", "/__pycache__/", "/.pytest_cache/")
+          wheels = list(pathlib.Path("dist").glob("*.whl"))
+          if not wheels:
+              raise SystemExit("no wheel produced")
+          for artifact in wheels:
+              with zipfile.ZipFile(artifact) as zf:
+                  names = zf.namelist()
+              leaked = [n for n in names if any(x in "/" + n for x in bad)]
+              if leaked:
+                  raise SystemExit(f"packaging hygiene failure in {artifact}: {leaked[:20]}")
+          print("wheel package hygiene: PASS")
+          PY

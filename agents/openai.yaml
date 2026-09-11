@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agent Project Orchestrator"
+  short_description: "Orchestrate agent-first projects with safe Git worktrees"
+  default_prompt: "Use $agent-project-orchestrator as the repo-centered controller for this software project. Recover project state, identify runnable tasks, create only safe worktrees, enforce quality gates, and never merge the stable branch without my explicit approval."

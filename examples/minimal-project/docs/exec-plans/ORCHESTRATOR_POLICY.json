@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "single_writer_control_plane": true,
+  "github": {
+    "enabled": false,
+    "require_pr_for_ready": false,
+    "require_required_checks": false,
+    "require_github_review": false
+  }
+}

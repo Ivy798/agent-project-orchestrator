@@ -1,0 +1,19 @@
+include README.md
+include LICENSE
+include SKILL.md
+include apo.py
+recursive-include agents *.yaml
+recursive-include scripts *.py
+recursive-include references *.md
+recursive-include assets *.md
+recursive-include examples *.md *.json *.yaml *.yml
+recursive-include src/agent_project_orchestrator/templates *.md
+recursive-include tests *.py
+prune build
+prune dist
+prune .pytest_cache
+prune .agent-project
+global-exclude *.py[cod]
+global-exclude __pycache__
+global-exclude *.egg-info
+global-exclude *.egg-info/*

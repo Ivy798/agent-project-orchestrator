@@ -1,0 +1,32 @@
+name: Feature request
+description: Propose a workflow or orchestration improvement
+title: "[feature] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / failure mode
+      description: Describe the concrete project problem before proposing a mechanism.
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+  - type: dropdown
+    id: layer
+    attributes:
+      label: Which layer is affected?
+      options:
+        - Methodology / docs
+        - Task DAG / planning
+        - Worktree orchestration
+        - Quality gates
+        - GitHub integration
+        - Recovery / state
+        - Other
