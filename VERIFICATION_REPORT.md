@@ -103,7 +103,7 @@ What must happen after public push:
 
 Windows path semantics are covered by unit tests and the repository now contains a real `windows-latest` CI matrix entry. This Linux session did not execute a native Windows runner.
 
-The first public GitHub CI run is therefore an explicit final verification gate for Windows behavior.
+That boundary has now been exercised by the public GitHub Actions runs recorded in section 9.
 
 ## 7. Known intentional limitations
 
@@ -131,9 +131,31 @@ wheel package hygiene: PASS (30 entries)
 
 The first Windows run exposed a command-resolution defect in the fake-`gh` integration test: the adapter verified the PATH-resolved command but launched a bare `gh`, which could select a different executable. The adapter now launches the resolved command and decodes GitHub CLI output as UTF-8. The targeted regression and full suite passed after the fix.
 
-GitHub-hosted Ubuntu and Windows CI remain required gates before creating the release tag.
+The hosted CI evidence and the remaining post-merge `main` gate are recorded below.
 
-## 9. Release judgment
+## 9. Hosted GitHub Actions verification — 2026-09-11
+
+The initial `main` run ([34558788837](https://github.com/Ivy798/agent-project-orchestrator/actions/runs/34558788837)) produced a real mixed result:
+
+- Ubuntu Python 3.11 and 3.13: pytest and selftest passed;
+- Windows Python 3.11 and 3.13: pytest passed, but selftest failed;
+- package build and package-content hygiene: passed.
+
+The Windows failure was caused by one worktree being reported through two valid native aliases: the ledger contained `C:\Users\RUNNER~1\...`, while Git reported `C:/Users/runneradmin/...`. The fix uses native filesystem identity checks for existing paths and preserves lexical normalization as the fallback.
+
+The path-fix validation run ([34559359119](https://github.com/Ivy798/agent-project-orchestrator/actions/runs/34559359119)) at commit `9e4b445b1196c1b0fca9963da68a34b875d10b36` passed:
+
+- Ubuntu Python 3.11: 41 tests passed; selftest passed;
+- Ubuntu Python 3.13: 41 tests passed; selftest passed;
+- Windows Python 3.11: 41 tests passed; selftest passed;
+- Windows Python 3.13: 41 tests passed; selftest passed;
+- wheel build and package-content hygiene: passed.
+
+The workflow-runtime follow-up run ([34560279115](https://github.com/Ivy798/agent-project-orchestrator/actions/runs/34560279115)) at commit `244891a757af949daded82488f5b6b396efd64f6` repeated all five successful jobs with `actions/setup-python@v6`; the earlier Node 20 deprecation annotations were absent.
+
+The pull request remains unmerged pending explicit owner approval. After merge, the resulting `main` commit must pass the same CI workflow before the `v1.2.0` tag is created.
+
+## 10. Release judgment
 
 The local release candidate passed all tests available in this environment and is suitable for:
 1. public GitHub publication;
