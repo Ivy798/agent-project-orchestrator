@@ -19,6 +19,7 @@
 - public license changed from MIT to Apache-2.0 for clearer patent terms;
 - CLI mutation commands consistently execute through the primary stable controller checkout;
 - Windows GitHub CLI execution honors the PATH-resolved command and decodes CLI output as UTF-8;
+- native path identity checks handle Windows 8.3 short-path aliases returned by hosted runners;
 - `ready_for_merge` can enforce live remote PR/CI state when enabled.
 
 ### Intentionally deferred

@@ -21,4 +21,9 @@ def path_key(value: str | os.PathLike[str], platform: str | None = None) -> str:
 
 
 def same_path(a: str | os.PathLike[str], b: str | os.PathLike[str], platform: str | None = None) -> bool:
+    if platform is None:
+        try:
+            return os.path.samefile(a, b)
+        except (OSError, ValueError):
+            pass
     return path_key(a, platform=platform) == path_key(b, platform=platform)
